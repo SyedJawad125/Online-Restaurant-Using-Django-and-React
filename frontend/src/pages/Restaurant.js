@@ -59,7 +59,6 @@ const Restaurant = () => {
     }
 
 
-
   return (
     <div class='container' style={{ marginLeft: '200px' }} >
         <h2 class='mt-4'>List Of Restaurant We deals Here!</h2>
@@ -84,8 +83,6 @@ const Restaurant = () => {
                     <h5 class="card-title">Opening Time : {item.opening_hours}</h5>
                     <h5 class="card-title">Closing Time : {item.closing_hours}</h5>
                     <h5 class="card-title">Cuisine Type : {item.cuisine_type}</h5>
-
-
                     
                     {/* <h5 class="card-context">{item.created_by_name}</h5> */}
                     <button class='btn btn-danger'onClick={()=> deleteRecord(item.id)}>Delete</button>
