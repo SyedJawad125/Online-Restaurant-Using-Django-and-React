@@ -4,10 +4,6 @@ import axiosInstance from '../context/AxiosInstance';
 
 const Updatemenu = () => {
 
-  
-  
-  
-  
     const navigate = useNavigate()
     const location = useLocation()
     const data = location.state.data
