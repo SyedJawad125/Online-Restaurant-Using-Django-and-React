@@ -67,18 +67,20 @@ const updateRecord = async (item) => {
 
         {data ? <p>Total: {data.count}</p> : <p>Total: 0</p>}
 
-        <div class="row">
+        <div class="container mt-5">
+          <div class="row"></div>
             
             { records ? 
             records.map(item => (
-                <div class="card" style={{width: "18rem"}}>
-                    <img src={`http://localhost:8000/${item.image}`} alt="Jane" style={ {width: '70%'} } />
+              <div class="col-lg-3 col-md-6 mb-1">
+                <div class="card" >
+                    <img src={`http://localhost:8000/${item.image}`} class="card-img-top" alt="Jane" />
 
                 <div class="card-body">
-                    <h5 class="card-title">Name : {item.name}</h5>
-                    <h5 class="card-title">Details : {item.description}</h5>
-                    <h5 class="card-title">Price : {item.price}</h5>
-                    <h5 class="card-title">Menu : {item.menu_name}</h5>
+                    <h5 class="card-title card-title-custom">{item.name}</h5>
+                    <h5 class="card-text card-text-custom">Details : {item.description}</h5>
+                    <h5 class="card-text card-text-custom">Price : {item.price}</h5>
+                    <h5 class="card-text card-text-custom">Menu : {item.menu_name}</h5>
 
 
                     {/* <h5 class="card-context">{item.created_by_name}</h5> */}
@@ -86,11 +88,14 @@ const updateRecord = async (item) => {
                     <button class='btn btn-primary mx-2' onClick={()=> updateRecord(item)}>Update</button>
                 </div>
                 </div>
+                </div>
+
 
     )) : 
     <p>Loading....</p>
     }
         </div>  
+        
         <ToastContainer/>
     </div>
   )
