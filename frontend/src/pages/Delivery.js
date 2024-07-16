@@ -68,37 +68,42 @@ const Delivery = () => {
         <br/><br/>
 
         {data ? <p>Total: {data.count}</p> : <p>Total: 0</p>}
-
-        <div class="row">
+        <div class="container mt-5">
+          <div class="row">
             
             { records ? 
             records.map(item => (
-                <div class="card" style={{width: "18rem"}}>
+              <div class="col-lg-3 col-md-6 mb-1">
+
+                <div class="card" >
                 <div class="card-body">
                     
-                    <h5 class="card-title">Cust Name : {item.customer_name}</h5>
-                    <h5 class="card-title">Cust Address : {item.customer_address}</h5>
-                    <h5 class="card-title">Cust Contact : {item.customer_phone}</h5>
-                    <h5 class="card-title">Del Status : {item.delivery_status}</h5>
-                    <h5 class="card-title">Del Person Name : {item.delivery_person_name}</h5>
-                    <h5 class="card-title">Del Person Cont : {item.delivery_person_contact}</h5>
-                    <h5 class="card-title">Rest Address : {item.restaurant_address}</h5>
-                    <h5 class="card-title">Rest Contact : {item.restaurant_phone}</h5>
-                    <h5 class="card-title">Total Amount : {item.total_amount}</h5>
-                    <h5 class="card-title">Payment Status : {item.payment_status}</h5>
-                    <h5 class="card-title">Order Bill : {item.order_bill?.bill}</h5>
-                    <h5 class="card-title">Rest Name : {item.restaurant_name}</h5>
+                    <h5 class="card-title card-title-custom">C_Name : {item.customer_name}</h5>
+                    <h5 class="card-text card-text-custom">Cust Address : {item.customer_address}</h5>
+                    <h5 class="card-text card-text-custom">Cust Contact : {item.customer_phone}</h5>
+                    <h5 class="card-text card-text-custom">Del Status : {item.delivery_status}</h5>
+                    <h5 class="card-text card-text-custom">Del Person Name : {item.delivery_person_name}</h5>
+                    <h5 class="card-text card-text-custom">Del Person Cont : {item.delivery_person_contact}</h5>
+                    <h5 class="card-text card-text-custom">Rest Address : {item.restaurant_address}</h5>
+                    <h5 class="card-text card-text-custom">Rest Contact : {item.restaurant_phone}</h5>
+                    <h5 class="card-text card-text-custom">Total Amount : {item.total_amount}</h5>
+                    <h5 class="card-text card-text-custom">Payment Status : {item.payment_status}</h5>
+                    <h5 class="card-text card-text-custom">Order Bill : {item.order_bill?.bill}</h5>
+                    <h5 class="card-text card-text-custom">Rest Name : {item.restaurant_name}</h5>
                     
                     {/* <h5 class="card-context">{item.created_by_name}</h5> */}
                     <button class='btn btn-danger'onClick={()=> deleteRecord(item.id)}>Delete</button>
                     <button class='btn btn-primary mx-2' onClick={()=> updateRecord(item)}>Update</button>
                 </div>
                 </div>
+                </div>
+
 
     )) : 
     <p>Loading....</p>
     }
         </div>  
+        </div>
         <ToastContainer/>
     </div>
       )
