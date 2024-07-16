@@ -66,20 +66,22 @@ const Promotion = () => {
 
         {data ? <p>Total: {data.count}</p> : <p>Total: 0</p>}
 
+    <div class="container mt-5">
+    
         <div class="row">
             
             { records ? 
             records.map(item => (
-                <div class="card" style={{width: "18rem"}}>
+                <div class="card" >
                 <div class="card-body">
-                    <h5 class="card-title">Name : {item.name}</h5>
-                    <h5 class="card-title">Details : {item.description}</h5>
-                    <h5 class="card-title">Start Date : {item.start_date}</h5>
-                    <h5 class="card-title">End Date : {item.end_date}</h5>
-                    <h5 class="card-title">Dis percentage : {item.discount_percentage}</h5>
-                    <h5 class="card-title">Dis Amount : {item.discount_amount}</h5>
-                    <h5 class="card-title">Promo Code : {item.promo_code}</h5>
-                    <h5 class="card-title">Restaurant : {item.restaurant_name}</h5>
+                    <h5 class="card-title card-title-custom">Name : {item.name}</h5>
+                    <h5 class="card-title card-title-custom">Details : {item.description}</h5>
+                    <h5 class="card-title card-title-custom">Start Date : {item.start_date}</h5>
+                    <h5 class="card-title card-title-custom">End Date : {item.end_date}</h5>
+                    <h5 class="card-title card-title-custom">Dis percentage : {item.discount_percentage}</h5>
+                    <h5 class="card-title card-title-custom">Dis Amount : {item.discount_amount}</h5>
+                    <h5 class="card-title card-title-custom">Promo Code : {item.promo_code}</h5>
+                    <h5 class="card-title card-title-custom">Restaurant : {item.restaurant_name}</h5>
 
                     {/* <h5 class="card-context">{item.created_by_name}</h5> */}
                     <button class='btn btn-danger'onClick={()=> deleteRecord(item.id)}>Delete</button>
