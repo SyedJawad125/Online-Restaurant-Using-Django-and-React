@@ -69,31 +69,38 @@ const Restaurant = () => {
 
         {data ? <p>Total: {data.count}</p> : <p>Total: 0</p>}
 
-        <div class="row">
+        <div class="container mt-5">
+          <div class="row">
             
             { records ? 
             records.map(item => (
-                <div class="card" style={{width: "18rem"}}>
+              <div class="col-lg-3 col-md-6 mb-1">
+
+                <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Name : {item.name}</h5>
-                    <h5 class="card-title">City : {item.address}</h5>
-                    <h5 class="card-title">Number : {item.phone_number}</h5>
-                    <h5 class="card-title">Email : {item.email}</h5>
-                    <h5 class="card-title">Website : {item.website}</h5>
-                    <h5 class="card-title">Opening Time : {item.opening_hours}</h5>
-                    <h5 class="card-title">Closing Time : {item.closing_hours}</h5>
-                    <h5 class="card-title">Cuisine Type : {item.cuisine_type}</h5>
+                    <h5 class="card-title card-title-custom">{item.name}</h5>
+                    <h5 class="card-text card-text-custom">City : {item.address}</h5>
+                    <h5 class="card-text card-text-custom">Number : {item.phone_number}</h5>
+                    <h5 class="card-text card-text-custom">Email : {item.email}</h5>
+                    <h5 class="card-text card-text-custom">Website : {item.website}</h5>
+                    <h5 class="card-text card-text-custom">Opening Time : {item.opening_hours}</h5>
+                    <h5 class="card-text card-text-custom">Closing Time : {item.closing_hours}</h5>
+                    <h5 class="card-text card-text-custom">Cuisine Type : {item.cuisine_type}</h5>
                     
                     {/* <h5 class="card-context">{item.created_by_name}</h5> */}
                     <button class='btn btn-danger'onClick={()=> deleteRecord(item.id)}>Delete</button>
                     <button class='btn btn-primary mx-2' onClick={()=> updateRecord(item)}>Update</button>
                 </div>
                 </div>
+                </div>
+
 
     )) : 
     <p>Loading....</p>
     }
         </div>  
+        </div>  
+
         <ToastContainer/>
     </div>
   )

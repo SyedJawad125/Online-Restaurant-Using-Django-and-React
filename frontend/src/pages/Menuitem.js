@@ -68,7 +68,7 @@ const updateRecord = async (item) => {
         {data ? <p>Total: {data.count}</p> : <p>Total: 0</p>}
 
         <div class="container mt-5">
-          <div class="row"></div>
+          <div class="row">
             
             { records ? 
             records.map(item => (
@@ -95,6 +95,8 @@ const updateRecord = async (item) => {
     <p>Loading....</p>
     }
         </div>  
+        </div>  
+
         
         <ToastContainer/>
     </div>
