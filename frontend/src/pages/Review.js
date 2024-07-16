@@ -68,25 +68,32 @@ const Review = () => {
 
         {data ? <p>Total: {data.count}</p> : <p>Total: 0</p>}
 
-        <div class="row">
+        <div class="container mt-5">
+          <div class="row">
             
             { records ? 
             records.map(item => (
-                <div class="card" style={{width: "18rem"}}>
+              <div class="col-lg-3 col-md-6 mb-1">
+
+                <div class="card" >
                 <div class="card-body">
-                    <h5 class="card-title">Restaurant Name : {item.restaurant_name}</h5>
-                    <h5 class="card-title">Rating : {item.rating}</h5>
-                    <h5 class="card-title">Comment : {item.comment}</h5>
+                    <h5 class="card-title card-title-custom">{item.restaurant_name}</h5>
+                    <h5 class="card-text card-text-custom">Rating : {item.rating}</h5>
+                    <h5 class="card-text card-text-custom">Comment : {item.comment}</h5>
                     {/* <h5 class="card-context">{item.created_by_name}</h5> */}
                     <button class='btn btn-danger'onClick={()=> deleteRecord(item.id)}>Delete</button>
                     <button class='btn btn-primary mx-2' onClick={()=> updateRecord(item)}>Update</button>
                 </div>
                 </div>
+                </div>
+
 
     )) : 
     <p>Loading....</p>
     }
         </div>  
+        </div>
+
         <ToastContainer/>
     </div>
   )
