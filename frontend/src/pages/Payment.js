@@ -68,19 +68,21 @@ const Payment = () => {
         <br/><br/>
 
         {data ? <p>Total: {data.count}</p> : <p>Total: 0</p>}
-
-        <div class="row">
+        <div class="container mt-5">
+          <div class="row">
             
             { records ? 
             records.map(item => (
-                <div class="card" style={{width: "18rem"}}>
+              <div class="col-lg-3 col-md-6 mb-1">
+
+                <div class="card" >
                 <div class="card-body">
-                    <h5 class="card-title">Order Bill : {item.order_bill?.bill}</h5>
-                    <h5 class="card-title">Amount : {item.amount}</h5>
-                    <h5 class="card-title">Payment Type : {item.payment_method}</h5>
-                    <h5 class="card-title">Card Holder Name : {item.card_holder_name}</h5>
-                    <h5 class="card-title">Card Number : {item.card_number}</h5>
-                    <h5 class="card-title">Transaction Date : {item.transaction_date}</h5>
+                    <h5 class="card-title card-title-custom">{item.order_bill?.bill}</h5>
+                    <h5 class="card-text card-text-custom">Amount : {item.amount}</h5>
+                    <h5 class="card-text card-text-custom">Payment Type : {item.payment_method}</h5>
+                    <h5 class="card-text card-text-custom">Card Holder Name : {item.card_holder_name}</h5>
+                    <h5 class="card-text card-text-custom">Card Number : {item.card_number}</h5>
+                    <h5 class="card-text card-text-custom">Transaction Date : {item.transaction_date}</h5>
 
                     
                     {/* <h5 class="card-context">{item.created_by_name}</h5> */}
@@ -88,11 +90,15 @@ const Payment = () => {
                     <button class='btn btn-primary mx-2' onClick={()=> updateRecord(item)}>Update</button>
                 </div>
                 </div>
+                </div>
+
 
     )) : 
     <p>Loading....</p>
     }
         </div>  
+        </div>
+
         <ToastContainer/>
     </div>
   )
