@@ -47,6 +47,13 @@ const Contact = () => {
         });
         if (response){
         console.log('Response:', response.data);
+        setname('');
+        setcountry('');
+        setphone_number('');
+        setemail('');
+        setsubject('');
+        setrestaurant('');
+
         navigate('/contact', {state: {message: 'contact Added!'}})
         }
         // Handle success
@@ -82,7 +89,7 @@ const Contact = () => {
                   onChange= {e => setemail(e.target.value)} />
           </div>
           <div class="form-group">
-          <select class="form-control" aria-label="Default select example" onChange={e => setrestaurant(e.target.value)}>
+          <select class="form-control" aria-label="Default select example" value={restaurant} onChange={e => setrestaurant(e.target.value)}>
             <option selected>Select Restaurant</option>
 
               { restaurantRecords ?
