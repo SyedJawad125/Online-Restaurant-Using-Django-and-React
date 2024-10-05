@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ContactViews, CategoryViews, DeliveryViews, MenuItemViews, MenuViews, NotificationViews, PaymentViews, PromotionViews, RestaurantViews, OrderViews, ReviewViews
+from .views import ContactViews, CategoryViews, DeliveryViews, MenuItemViews, MenuViews, NotificationViews, OrderWithFSMViews, PaymentViews, PromotionViews, RestaurantViews, OrderViews, ReviewViews
 
 urlpatterns = [
     path('restaurant', RestaurantViews.as_view({"get": "get_restaurant",
@@ -11,6 +11,7 @@ urlpatterns = [
                                                 "post": "post_menu",
                                                 "patch": "update_menu",
                                                 "delete": "delete_menu"})),
+                                                
     path('menuitem', MenuItemViews.as_view({"get": "get_menuitem",
                                                 "post": "post_menuitem",
                                                 "patch": "update_menuitem",
@@ -31,25 +32,21 @@ urlpatterns = [
                                                 "patch": "update_review",
                                                 "delete": "delete_review"})),
 
-
     path('promotion', PromotionViews.as_view({"get": "get_promotion",
                                                 "post": "post_promotion",
                                                 "patch": "update_promotion",
                                                 "delete": "delete_promotion"})),
 
-
     path('delivery', DeliveryViews.as_view({"get": "get_delivery",
                                                 "post": "post_delivery",
                                                 "patch": "update_delivery",
                                                 "delete": "delete_delivery"})),
-
-                                        
+                               
     path('notification', NotificationViews.as_view({"get": "get_notification",
                                                 "post": "post_notification",
                                                 "patch": "update_notification",
                                                 "delete": "delete_notification"})),
-
-                
+            
     path('category', CategoryViews.as_view({"get": "get_category",
                                                 "post": "post_category",
                                                 "patch": "update_category",
@@ -59,5 +56,10 @@ urlpatterns = [
                                                 "post": "post_contact",
                                                 "patch": "update_contact",
                                                 "delete": "delete_contact"})),
+                                                
+    path('orderwithfms', OrderWithFSMViews.as_view({"get": "get_orderwithfms",
+                                                "post": "post_orderwithfms",
+                                                "patch": "update_orderwithfms",
+                                                "delete": "delete_orderwithfms"})),
    
 ]

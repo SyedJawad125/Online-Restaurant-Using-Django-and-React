@@ -2,7 +2,7 @@ from datetime import date, timedelta
 from django.db import transaction
 from django.utils import timezone
 from django.contrib.auth import authenticate
-from restaurent.filters import CategoryFilter, ContactFilter, DeliveryFilter, MenuFilter, MenuItemFilter, NotificationFilter, OrderFilter, PaymentFilter, PromotionFilter, RestaurantFilter, ReviewFilter
+from restaurent.filters import CategoryFilter, ContactFilter, DeliveryFilter, MenuFilter, MenuItemFilter, NotificationFilter, OrderFilter, OrderWithFSMFilter, PaymentFilter, PromotionFilter, RestaurantFilter, ReviewFilter
 from restaurent.restaurent_serializer import *
 from restaurent.models import Delivery, Restaurant
 from utils.reusable_methods import get_first_error_message, generate_six_length_random_number
@@ -1048,6 +1048,89 @@ class ContactController:
 
         except Exception as e:
             return Response({'error': str(e)}, 500)
+        
+from django_fsm import can_proceed
+from rest_framework import status
 
-   
+class OrderWithFSMController:
+    serializer_class = OrderWithFSMSerializer
+    filterset_class = OrderWithFSMFilter
 
+    def create(self, request):
+        try:
+            request.POST._mutable = True
+            request.data["created_by"] = request.user.guid
+            request.POST._mutable = False
+            
+            # Create a new order using the serializer
+            validated_data = OrderWithFSMSerializer(data=request.data)
+            if validated_data.is_valid():
+                response = validated_data.save()
+                response_data = OrderWithFSMSerializer(response).data
+                return Response({'data': response_data}, 200)
+            else:
+                error_message = get_first_error_message(validated_data.errors, "UNSUCCESSFUL")
+                return Response({'data': error_message}, 400)
+        except Exception as e:
+            return Response({'error': str(e)}, 500)
+
+    def get_orderwithfms(self, request):
+        try:
+            # Retrieve the order ID from the query parameters
+            # orderwithfms_id = request.query_params.get('id')
+            orderwithfms_id = request.data.get('id')
+            if not orderwithfms_id:
+                return Response({'error': 'order_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+            orderwithfms = OrderWithFSM.objects.get(id=orderwithfms_id)
+            serializer = OrderWithFSMSerializer(orderwithfms)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except OrderWithFSM.DoesNotExist:
+            return Response({'error': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def update_orderwithfms(self, request):
+        try:
+            # Retrieve the order ID from the query parameters
+            # orderwithfms_id = request.query_params.get('id')  # Get 'id' from query parameters
+            orderwithfms_id = request.data.get('id')
+            if not orderwithfms_id:
+                return Response({'error': 'order_id (query param id) is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Set 'updated_by' field in request data
+            request.POST._mutable = True
+            request.data["updated_by"] = request.user.guid
+            request.POST._mutable = False
+
+            # Find the order by ID
+            orderwithfms = OrderWithFSM.objects.get(id=orderwithfms_id)
+            serializer = OrderWithFSMSerializer(orderwithfms, data=request.data, partial=True)
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        except OrderWithFSM.DoesNotExist:
+            return Response({'error': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+    def delete_orderwithfms(self, request):
+        try:
+            # Retrieve the order ID from the query parameters
+            orderwithfms_id = request.query_params.get('id')
+            if not orderwithfms_id:
+                return Response({'error': 'order_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+            orderwithfms = OrderWithFSM.objects.get(id=orderwithfms_id)
+            orderwithfms.delete()
+            return Response({"message": "Order deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+        
+        except OrderWithFSM.DoesNotExist:
+            return Response({'error': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

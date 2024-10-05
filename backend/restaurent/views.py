@@ -4,7 +4,7 @@ from django.shortcuts import render,HttpResponse
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from utils.base_authentication import JWTAuthentication
-from .restaurent_controller import  CategoryController, ContactController, DeliveryController, MenuController, MenuItemController, NotificationController, OrderController, PaymentController, PromotionController, RestaurantController, ReviewController
+from .restaurent_controller import  CategoryController, ContactController, DeliveryController, MenuController, MenuItemController, NotificationController, OrderController, OrderWithFSMController, PaymentController, PromotionController, RestaurantController, ReviewController
 from permissions.decorator import permission_required
 # Create your views here.
 
@@ -20,6 +20,7 @@ delivery_controller = DeliveryController()
 notification_controller = NotificationController()
 category_controller = CategoryController()
 contact_controller = ContactController()
+orderwithfsm_controller = OrderWithFSMController()
 
 
 
@@ -206,3 +207,19 @@ class ContactViews(ModelViewSet):
 
     def delete_contact(self, request):
         return contact_controller.delete_contact(request)
+    
+
+class OrderWithFSMViews(ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+
+    def post_orderwithfms(self, request):
+        return orderwithfsm_controller.create(request)
+
+    def get_orderwithfms(self, request):
+        return orderwithfsm_controller.get_orderwithfms(request)
+
+    def update_orderwithfms(self, request):
+        return orderwithfsm_controller.update_orderwithfms(request)
+
+    def delete_orderwithfms(self, request):
+        return orderwithfsm_controller.delete_orderwithfms(request)

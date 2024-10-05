@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Delivery, Notification, Order, OrderDetail, Payment, Promotion, Restaurant, Menu, \
+from .models import Category, Delivery, Notification, Order, OrderDetail, OrderWithFSM, Payment, Promotion, Restaurant, Menu, \
     MenuItem, Review, Contact
 from rest_framework.serializers import ModelSerializer
 from user_auth.user_serializer import UserListingSerializer
@@ -159,4 +159,21 @@ class OrderSerializerList(serializers.ModelSerializer):
         model = Order
         fields = ['id', 'bill']
 
+
+
+class OrderWithFSMSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderWithFSM
+        fields = ['id', 'bill', 'delivery_address', 'status', 'delivery_date', 'customer', 'restaurant', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']  # If you don't want these fields to be modified
+
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['created_by'] = UserListingSerializer(instance.created_by).data if instance.created_by else None
+        data['updated_by'] = UserListingSerializer(instance.updated_by).data if instance.updated_by else None
+        data['restaurant_name'] = instance.restaurant.name
+        data['created_at_date'] = instance.created_at.date()
+    
+        return data
 
