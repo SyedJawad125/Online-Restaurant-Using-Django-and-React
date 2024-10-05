@@ -206,3 +206,43 @@ class Contact(models.Model):
                                    null=True, blank=True)
     updated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='contact_updated_by',
                                    null=True, blank=True)
+    
+
+
+from django_fsm import FSMField, transition
+from django.db import models
+
+
+class OrderWithFSM(models.Model):
+    status_choices = (
+        ("booked", "booked"),
+        ("in_process", "in_process"),
+        ("delivered", "delivered")
+    )
+
+    bill = models.PositiveBigIntegerField(null=True, blank=True)
+    delivery_address = models.TextField()
+    status = FSMField(default="booked", choices=status_choices)  # Using FSMField for status
+    delivery_date = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orderwithfsm_created_by', null=True, blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orderwithfsm_updated_by', null=True, blank=True)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orderwithfsm_customer', null=True, blank=True)
+    restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE, related_name='restaurantwithfsm_order', null=True, blank=True)
+
+    # FSM Transitions
+    @transition(field=status, source='booked', target='in_process')
+    def process_order(self):
+        """ Transition from 'booked' to 'in_process'. """
+        pass
+
+    @transition(field=status, source='in_process', target='delivered')
+    def deliver_order(self):
+        """ Transition from 'in_process' to 'delivered'. """
+        pass
+
+    @transition(field=status, source=['booked', 'in_process'], target='booked')
+    def reset_order(self):
+        """ Transition back to 'booked'. """
+        pass
