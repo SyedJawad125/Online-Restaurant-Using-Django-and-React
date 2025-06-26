@@ -10,7 +10,7 @@ const Login = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const { login } = useContext(AuthCon);
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [flag, setFlag] = useState(false)
 
@@ -27,7 +27,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const payload = {"username":username, "password":password}
+          const payload = {"email":email, "password":password}
           const response = await axiosInstance.post('/user/login', payload , {
             headers: {
               'Content-Type': 'application/json'
@@ -58,9 +58,9 @@ const Login = () => {
                 <div class="card-body" >
                     <form onSubmit={handleSubmit}>
                         <div class="mb-3">
-                            <label for="username" class="form-label">User Name</label>
-                            <input type="text" class="form-control" id="username" aria-describedby="emailHelp" required value={username}
-                              onChange= {e => setUsername(e.target.value)}/>
+                            <label for="email" class="form-label">User Name</label>
+                            <input type="text" class="form-control" id="email" aria-describedby="emailHelp" required value={email}
+                              onChange= {e => setEmail(e.target.value)}/>
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
                         <div class="mb-3">
